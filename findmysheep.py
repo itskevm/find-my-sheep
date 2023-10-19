@@ -110,9 +110,6 @@ def get_all_cards_in_list(list_id):
   if response.status_code != 200:
     return create_response_err("GET", response.status_code)
   all_people_in_list = response.json()
-  # For verbose Logging only
-  # for person in all_people_in_list:
-    # print(f"{person.get('name')}; {person.get('desc')}; {person.get('id')}")
   names = "\n".join([person.get("name") for person in all_people_in_list if "name" in person])
   return {
     "user_msg": names,
@@ -133,9 +130,6 @@ def get_all_names():
     return create_response_err("GET", response.status_code)
   all_people = response.json()
   names = "\n".join([person.get("name") for person in all_people if "name" in person])
-  # For verbose Logging only
-  # for person in all_people:
-    # print(f"{person.get('name')}; {person.get('desc')}; {person.get('id')}")
   return {
     "user_msg": names,
     "usable": True,
@@ -156,7 +150,6 @@ def get_card_by_name(person_name):
       break
   if not persons_card:
     return create_custom_err("Name does not exist")
-  # print(list(card_of_interest.keys()))
   card_name = persons_card.get("name")
   card_id = persons_card.get("id")
   card_desc = persons_card.get("desc")
@@ -201,7 +194,7 @@ def append_card_desc_by_id(id: str, desc_str: str):
     return create_custom_err(BAD_CONN_STR)
   if response.status_code != 200:
     return create_response_err("GET", response.status_code)
-  
+
   # Append the new description
   old_desc = response.json().get('desc')
   if isinstance(old_desc, str):
@@ -228,7 +221,6 @@ def append_card_desc_by_id(id: str, desc_str: str):
     "user_msg": "Successfully updated the description.",
     "usable": True,
   }
-
 
 """
 FUTURE DEVELOPMENT
@@ -262,17 +254,17 @@ def command_call(user_entry: str):
   if not split_entry[0].startswith("?"):
     return "Commands begin with '?'. "
   cmd = split_entry[0]
-  
+
   # Select the command
   if cmd == "?help":
     return HELP_STR
-  
+
   if cmd == "?info":
     args = re.findall(r'\(([^)]+)\)', user_entry)
     if len(args) != 1:
       return f"Wrong usage. {HELP_PROMPT}"
     return get_card_by_name(args[0]).get("user_msg")
-  
+
   if cmd == "?names":
     args = re.findall(r'\(([^)]+)\)', user_entry)
     if len(args) != 1:
@@ -281,13 +273,13 @@ def command_call(user_entry: str):
     if not list_id.get("usable"):
       return list_id.get("user_msg")
     return get_all_cards_in_list(list_id.get("return_data")).get("user_msg")
-  
+
   if cmd == "?lists":
     return get_all_list_names().get("user_msg")
-  
+
   if cmd == "?allnames":
     return get_all_names().get("user_msg")
-  
+
   if cmd == "?update":
     args = re.findall(r'\(([^)]+)\)', user_entry)
     if len(args) != 2:
@@ -302,22 +294,19 @@ def command_call(user_entry: str):
   return f"Invalid command. {HELP_PROMPT}"
 
 def main():
-    try:
-        [args] = sys.argv[1:]
-    except Exception:
-        print("Failing to process user input.")
-        return
-    print(command_call(args))
+  try:
+    [args] = sys.argv[1:]
+  except Exception:
+    print("Failing to process user input.")
     return
+  print(command_call(args))
+  return
 
 if __name__ == '__main__':
-    main()
+  main()
 
-#print(command_call("?info (Joseph Smith)"))
-#print(command_call("?names (Important people)"))
-#print(command_call("?lists"))
 """
-USAGE
+DEV USAGE TESTING AREA
 """
 # full = get_all_names()
 # print(full.get("user_msg"))
