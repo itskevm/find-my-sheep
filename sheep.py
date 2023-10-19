@@ -4,15 +4,20 @@ receiving user input and returning the requested data in a brief readable format
 """
 
 import re
+import os
 import sys
 import json
 import calendar
 import requests
 from requests.exceptions import ConnectionError
 from datetime import datetime,timedelta
-
+from dotenv import load_dotenv
 
 # GLOBAL VARIABLES
+load_dotenv()
+CLE = os.getenv("KEY")
+TOK = os.getenv("TOKEN")
+BOARD_ID = os.getenv("BOARD")
 HELP_PROMPT = "Use ?help for instructions."
 HELP_STR = """Replace the text in caps with its corresponding value.
 Every Person has a name and description.
@@ -33,9 +38,6 @@ Returns all Person names across all Lists
 ?update (NAME) (DESCRIPTION TEXT)
 Adds onto the existing description text for a given Person."""
 BAD_CONN_STR = "Could not establish a connection to retrieve any data."
-CLE = "ca465cd986c77caac5dfb3cd1c6e52b9"
-TOK = "ATTAf4b0a022aa89f2c19ba5ce2696f641551d26004ead21f366583ed3d42fef478e89B13555"
-BOARD_ID = "NpRJdfe4"
 QUERY = {
   'key': CLE,
   'token': TOK
@@ -46,6 +48,11 @@ HEADERS = {
 
 # FUNCTION DECLARATIONS
 def create_response_err(method: str, code: int):
+  """
+  Codes:
+  400 Not found; check BOARD_ID
+  401 Unauthorized; check access credentials
+  """
   return {
     "user_msg": f"Err: Bad {method} request. Code {code}.",
     "usable": False,
