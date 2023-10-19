@@ -1,4 +1,8 @@
 """
+Filename: sheep.py
+Version:  0.2
+Author:   Kevin Matos
+Description:
 A python script which reads uses env variables to connect to a Trello board,
 receiving user input and returning the requested data in a brief readable format.
 """
@@ -9,9 +13,9 @@ import sys
 import json
 import calendar
 import requests
-from requests.exceptions import ConnectionError
-from datetime import datetime,timedelta
 from dotenv import load_dotenv
+from datetime import datetime,timedelta
+from requests.exceptions import ConnectionError
 
 # GLOBAL VARIABLES
 load_dotenv()
