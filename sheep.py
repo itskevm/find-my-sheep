@@ -23,23 +23,21 @@ CLE = os.getenv("KEY")
 TOK = os.getenv("TOKEN")
 BOARD_ID = os.getenv("BOARD")
 HELP_PROMPT = "Use ?help for instructions."
-HELP_STR = """Replace the text in caps with its corresponding value.
-Every Person has a name and description.
-Every List has a name and may contain one or more Persons. 
+HELP_STR = """Text within parenthesis must be replaced
 
-?info (NAME)
-Returns the description for a given Person.
+?info (insert name here)
+Gives the description for a given Person.
 
-?names (LIST NAME)
-Returns all Person names in one list.
+?names (insert list name)
+Gives all names on the given list.
 
 ?lists
-Returns every List name
+Gives list names
 
 ?allnames
-Returns all Person names across all Lists
+Gives all Person names across all Lists
 
-?update (NAME) (DESCRIPTION TEXT)
+?update (insert name) (insert description)
 Adds onto the existing description text for a given Person."""
 BAD_CONN_STR = "Could not establish a connection to retrieve any data."
 QUERY = {
