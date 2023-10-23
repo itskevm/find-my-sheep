@@ -1,6 +1,6 @@
 """
 Filename: sheep.py
-Version:  0.2
+Version:  0.3
 Author:   Kevin Matos
 Description:
 A python script which reads uses env variables to connect to a Trello board,
